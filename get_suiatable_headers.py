@@ -23,6 +23,11 @@ def main(settings):
 
 
 if __name__ == "__main__":
+    """
+    Takes arguments from the command line,
+    runs the main function with the accepted arguments
+    """
+    
     parser = argparse.ArgumentParser(description="Takes 2 arguments")
 
     parser.add_argument("-i", "--input", help="Fasta input file", required=True)
