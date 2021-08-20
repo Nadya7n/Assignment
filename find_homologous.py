@@ -1,9 +1,15 @@
 import argparse
+
 from Bio import SeqIO
 from tqdm import tqdm
 
 
 def main(settings):
+    """
+    Searches the reference genome for target sequences,
+    and if it occurs more than once,
+    searches for the coordinates of the target and non-target sequences
+    """
 
     ref_path = settings["fasta"]
     target_path = settings["target"]
@@ -13,6 +19,7 @@ def main(settings):
     with open(target_path) as fh:
         with open(ref_path) as fh_2:
             genome = [str(record.seq).lower() for record in SeqIO.parse(fh_2, "fasta")]
+
             for idr, record_2 in enumerate(tqdm(SeqIO.parse(fh, "fasta"))):
                 for chromosome in genome:
                     target_sequence = str(record_2.seq).lower()
@@ -23,6 +30,11 @@ def main(settings):
 
 
 def find_homo(ref, output_path, target_seq, target_id):
+    """
+    Searches for the coordinates of the target and non-target sequences,
+    writes them to the file
+    """
+
     with open(output_path, "a+") as fw:
         target_seq = target_seq.lower()
 
@@ -48,6 +60,11 @@ def find_homo(ref, output_path, target_seq, target_id):
 
 
 if __name__ == "__main__":
+    """
+    Takes arguments from the command line,
+    runs the main function with the accepted arguments
+    """
+
     parser = argparse.ArgumentParser(description="Takes 3 arguments")
 
     parser.add_argument(
